@@ -10,9 +10,9 @@ import {join} from 'path';
 import {readFileSync} from 'fs';
 
 
-import * as mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-const routeManager = require('./server/routes');
+// import * as mongoose from 'mongoose';
+// import bodyParser from 'body-parser';
+// const routeManager = require('./server/routes');
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -54,16 +54,16 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
 
-mongoose.connect('mongodb+srv://mahatashin:barcelona@cluster0-ykjjj.mongodb.net/sattaKing?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('Database connected successfully!'))
-  .catch((err) => console.error(err));
+// mongoose.connect('mongodb+srv://mahatashin:barcelona@cluster0-ykjjj.mongodb.net/sattaKing?retryWrites=true&w=majority', {
+//   useNewUrlParser: true,
+//   useFindAndModify: false,
+//   useUnifiedTopology: true
+// })
+//   .then(() => console.log('Database connected successfully!'))
+//   .catch((err) => console.error(err));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 // ALl regular routes use the Universal engine
 app.get('*', (req, res) => {
