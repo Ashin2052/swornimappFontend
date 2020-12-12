@@ -9,7 +9,7 @@ let checkToken = (req, res, next) => {
 //   }
 
   if (token) {
-    jwt.verify(token, 'fsdf', (err, decoded) => {
+    jwt.verify(token, 'mahat.swornim', (err, decoded) => {
       if (err) {
         return res.json({
           success: false,

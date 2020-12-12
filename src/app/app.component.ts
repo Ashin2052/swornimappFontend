@@ -5,12 +5,12 @@ import {Meta, Title} from '@angular/platform-browser';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'angular-universal-heroku';
   constructor(    private titleService: Title,
                   private meta: Meta) {
     this.meta.addTags([
-      {name:'google-site-verification', content:'ci2u4_rFCnV4ahAB9FVbM9RH9amaItDJggMX92rN0-s'},
+      {name: 'google-site-verification', content: 'ci2u4_rFCnV4ahAB9FVbM9RH9amaItDJggMX92rN0-s'},
       { name: 'keywords', content: 'Swornim wind pipe industry nepal' },
       { name: 'robots', content: 'index, follow' },
       { name: 'author', content: 'Ashin mahat' },

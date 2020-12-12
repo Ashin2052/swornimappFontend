@@ -1,17 +1,16 @@
-const productModel = require("../models/product.db");
-var multer  = require('multer');
+const productModel = require('../models/product.db');
+let multer  = require('multer');
 // var upload=require('../utilities/file.storage')
-class product {
+class Product {
     constructor() {}
 
     addproduct(payload) {
         return new Promise((resolve, reject) => {
-            let product = new productModel(payload);
+            const product = new productModel(payload);
             product
                 .save()
-                .then(d =>
-                  {
-                    resolve(d)
+                .then(d => {
+                    resolve(d);
                   })
                 .catch(e => reject(e));
         });
@@ -22,8 +21,8 @@ class product {
             productModel
                 .find()
                 .then(d => {
-                    console.log(d)
-                    resolve(d)
+                    console.log(d);
+                    resolve(d);
                 })
                 .catch(e => reject(e));
         });
@@ -65,4 +64,4 @@ class product {
     }
 
 }
-module.exports = new product();
+module.exports = new Product();
