@@ -1,0 +1,57 @@
+<div>
+  <span>{{catagory ? 'Create' : 'Update'}}Catagory </span>
+  <form
+    fxLayout="column"
+    fxLayoutGap="8px"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="createEditCatagoryForm"
+    (keydown.enter)="$event.preventDefault()">
+    <div fxLayoutAlign="space-between center">
+      <span fxFlex="35">Name</span>
+      <mat-form-field
+        appearance="outline"
+        floatLabel="never"
+        fxLayout="column"
+        fxFlex="65"
+        formControlName="name">
+        <input matInput>
+        <mat-error *ngIf="formControls.name.touched || submitted">
+           <span *ngIf="formControls.name.errors?.required">
+              Catagory name is required.
+            </span>
+          <span *ngIf="formControls.username.errors?.minlength">
+              Catagory name must have at least 5 character.
+            </span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayoutAlign="space-between center">
+      <span fxFlex="35">Type</span>
+      <mat-form-field
+        appearance="outline"
+        floatLabel="never"
+        fxLayout="column"
+        class="bi-mat-form-field filter-input"
+        fxFlex="65"
+        formControlName="type">
+        <input matInput>
+        <mat-error *ngIf="formControls.type.touched || submitted">
+                <span *ngIf="formControls.type.errors?.required">
+              Catagory Type is required.
+            </span>
+          <span *ngIf="formControls.type.errors?.minlength">
+               Catagory Type must have at least 5 character.
+            </span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button mat-button fxFlex="20" class="bi-btn bi-btn-primary">
+        {{ catagory ? 'Update' : 'Save' }}
+      </button>
+      <button mat-button type="button" fxFlex="20" class="bi-btn bi-btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

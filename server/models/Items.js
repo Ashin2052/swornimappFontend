@@ -12,7 +12,11 @@ const ItemSchema = new Schema({
     Category: {
       type: Schema.Types.ObjectId,
       ref: 'Catagory'
-    }
+    },
+  imageUrl:{
+     type:String,
+     required:true
+  }
 },
 {timeStamp: true });
 

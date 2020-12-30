@@ -3,14 +3,13 @@ const express = require('express');
 const router = express.Router();
 const itemFunction = require('../services/items.services');
 let tokenValidation = require('../utilities/tokenValidator');
-
-
-router.post('/', tokenValidation.checkToken, (req, res) => {
+let upload=require('../utilities/file.storage')
+//
+router.post('/',upload.single('imageURL'), (req, res) => {
   itemFunction.addItem(req.body)
     .then(d => res.json(d))
     .catch(e => {
       res.status(403).json({ e });
-
     });
 });
 
@@ -49,4 +48,5 @@ router.put('/:id', tokenValidation.checkToken, (req, res) => {
       res.status(403).json({ e });
     });
 });
+
 module.exports = router;
