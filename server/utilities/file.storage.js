@@ -1,23 +1,33 @@
-const multer = require("multer");
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '../../src/assets/image');
+const express = require("express");
+const router = express.Router();
+const mongoose = require("mongoose");
+const multer = require('multer');
+var ObjectID = require('mongodb').ObjectID;
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'assets/image');
   },
-  filename: (req, file, cb) => {
-    console.log(file);
-    var filetype = '';
-    if(file.mimetype === 'image/gif') {
-      filetype = 'gif';
-    }
-    if(file.mimetype === 'image/png') {
-      filetype = 'png';
-    }
-    if(file.mimetype === 'image/jpeg') {
-      filetype = 'jpg';
-    }
-    cb(null, 'image-' + Date.now() + '.'+req.id + filetype);
+  filename: function(req, file, cb) {
+    cb(null,ObjectID() + file.originalname);
   }
 });
 
-var upload = multer({storage: storage});
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+
+var upload = multer({storage: storage,
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter});
 module.exports =upload;
+

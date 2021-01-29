@@ -93,6 +93,7 @@ import * as express from 'express';
 import {join} from 'path';
 import {readFileSync} from 'fs';
 import * as cors from 'cors';
+import * as path from 'path';
 
 import * as mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -126,24 +127,34 @@ app.engine('html', ngExpressEngine({
   ]
 }));
 
+require('dotenv').config({ path: 'variables.env' });
+
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
 
-mongoose.connect('mongodb+srv://mahatashin:barcelona@cluster0-ykjjj.mongodb.net/sattaKing?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('Database connected successfully!'))
-  .catch((err) => console.error(err));
+require('dotenv').config({ path: 'variables.env' });
+app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+mongoose.connect(process.env.URL, { useNewUrlParser: true , useFindAndModify: true});
+mongoose.connection.on('connected', () =>
+  console.log('mongodb connected successfully.')
+);
+mongoose.connection.on('error', error => console.log('connection failed.'));
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
 /* - Example Express Rest API endpoints -
 */
 
-app.use(express.static(__dirname + '/src/assets/image'));
+app.use(bodyParser.json({}));
+
+app.use(express.static(__dirname + '/assets/image'));
+app.use('/static', express.static(path.join(__dirname, '/assets/image')));
+
 app.use('/api', routeManager);
 
 /* - Example Express Rest API endpoints -
@@ -161,6 +172,6 @@ app.get('*', (req, res) => {
 });
 
 // Start up the Node server
-app.listen(PORT, () => {
-  console.log(`Node Express server listening on http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(path.join(__dirname, 'assets/image'));
 });

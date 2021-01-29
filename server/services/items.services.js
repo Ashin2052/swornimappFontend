@@ -1,51 +1,56 @@
 const itemModel = require('../models/Items');
-let multer  = require('multer');
-// var upload=require('../utilities/file.storage')
+const catagoryModel = require('../models/catagory');
+
+const mongoose = require("mongoose");
+const fs=require('fs');
+const path=require('path');
+const { pid } = require('process');
+const Schema = mongoose.Schema;
+
 class Item {
     constructor() {}
 
-    addItem(payload) {
+    addItem(payload,image) {
         return new Promise((resolve, reject) => {
             const item = new itemModel({
-                title:payload.title,
-               _id: new mongoose.Types.ObjectId(),
+                name:payload.name,
                 description:payload.description,
+                image:image.filename,
+                price:payload.price,
                 showCorousal:payload.showCorousal,
-                imageURL:payload.file,
-                catagory:payload.catagory
+                catagory:payload.catagory,
             });
-            item
-                .save()
-                .then(result => {
-                  res.status(201).json({
+               item.save()
+                .then(async(result) => {
+            await   catagoryModel.update(  
+                    { _id: payload.catagory }, { $push: { products: result._id } })
+                    resolve({
                     message: "Created item successfully",
-                    createditem: {
-                      title:result.title,
-                      catagory:result.catagory,
-                      description:result.description,
-                      _id: result._id,
-                      request: {
-                        type: 'GET',
-                        url: "http://localhost:3000/items/" + result._id
-                      }
-                    }
+                    createditem: result
                   });
                 })
-                .catch(e => reject(e));
+                .catch(e => {
+                     reject(e)
+                });
         });
     }
 
-    getItemList() {
+    getItemList(page,body) {
         return new Promise((resolve, reject) => {
+            page=page-1;
+            let itemsPerPage=15;
             itemModel
-                .find()
+                .find(body)
+                .populate( 'catagory')
+                .skip(page*itemsPerPage)
+                .limit(itemsPerPage)
                 .then(d => {
-                    console.log(d);
                     resolve(d);
                 })
                 .catch(e => reject(e));
         });
     }
+
     getParlicaulaItem(pid) {
         return new Promise((resolve, reject) => {
             itemModel
@@ -56,29 +61,73 @@ class Item {
                 .catch(e => reject(e));
         });
     }
+
     deleteItem(id) {
         return new Promise((resolve, reject) => {
             itemModel
                 .findByIdAndDelete(id)
-                .then(d => resolve(d))
+                .then( d =>{
+                    catagoryModel.update({ 
+                        "products" : { $in : [id] } 
+                    }, { 
+                        $pullAll : { "products" : [id] }
+                    } , (err, subject) => {
+                
+                    })
+                   
+                    fs.unlink(path.join(process.cwd(),'\\assets\\image\\'+d.image),err => {
+                        reject(err)
+                    })
+                    resolve(d)})
                 .catch(e => reject(e));
         });
     }
 
-    updateItem(payload, pId) {
-        return new Promise((resolve, reject) => {
+    updateItem(payload, pId,image) {
+        return new Promise(async (resolve, reject) => {
+            let productObj;
+            if(image)
+            {
+                productObj={
+                    name:payload.name,
+                    description:payload.description,
+                    image:image.filename,
+                    price:payload.price,
+                    catagory:payload.catagory,
+                    showCorousal:payload.showCorousal
+                }
+            }
+             else
+                {
+                    productObj={  name:payload.name,
+                        description:payload.description,
+                        price:payload.price,
+                        catagory:payload.catagory,
+                        showCorousal:payload.showCorousal}
+                }
             itemModel
                 .findByIdAndUpdate({
                     _id: pId
                 }, {
-                    $set: payload
+                    $set: productObj
                 }, {
                     new: true
                 })
                 .then(d => {
+                    if(image)
+                    {
+                        fs.unlink(path.join(process.cwd(),'\\assets\\image\\'+payload.previousImage),err => {
+                            reject(err)
+                        })
+                    }
                     resolve(d);
                 })
-                .catch(e => reject(e));
+                .catch(e => {
+                    fs.unlink(path.join(process.cwd(),image.path),err => {
+                        reject(err)
+                    })
+                    reject(e)
+                });
         });
     }
 

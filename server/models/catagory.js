@@ -1,7 +1,7 @@
-import { timeStamp } from 'console';
-import mongoose, { Schema } from 'mongoose';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const CatagorySchema = new Schema({
+const catagorySchema = new mongoose.Schema({
     name: {
         type: String
     },
@@ -10,9 +10,12 @@ const CatagorySchema = new Schema({
     },
     products: [{
       type: Schema.Types.ObjectId,
-      ref: 'Item'
+      ref: 'itemSchema'
     }]
 },
 {timeStamp: true});
 
-export default mongoose.model('Catagory', CatagorySchema);
+// export default mongoose.model('Catagory', CatagorySchema);
+
+const catagoryModel = mongoose.model('catagorySchema', catagorySchema);
+module.exports = catagoryModel;

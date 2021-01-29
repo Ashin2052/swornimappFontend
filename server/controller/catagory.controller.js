@@ -1,52 +1,51 @@
+const Router = require('express').Router;
+let router = Router();
+const catagoryFunction = require('../services/catagory.service')
+var tokenValidation = require('../utilities/tokenValidator')
 
-const express = require('express');
-const router = express.Router();
-const itemFunction = require('../services/items.services');
-let tokenValidation = require('../utilities/tokenValidator');
-let upload=require('../utilities/file.storage')
-//
-router.post('/',upload.single('imageURL'), (req, res) => {
-  itemFunction.addItem(req.body)
-    .then(d => res.json(d))
-    .catch(e => {
-      res.status(403).json({ e });
-    });
-});
+
+router.post('/', tokenValidation.checkToken, (req, res) => {
+    catagoryFunction.addCatagory(req.body)
+        .then(d => res.json(d))
+        .catch(e => {
+            res.status(403).json({ e });
+
+        });
+})
 
 
 router.get('/', (req, res) => {
-
-  itemFunction.getItemList()
-    .then(d => {
-      res.json(d);
-      // res.render("info")
-    })
-    .catch(e => {
-      res.status(403).json({ e });
-    });
-});
+    catagoryFunction.getCatagoryList()
+        .then(d => {
+            res.json(d)
+            // res.render("info")
+        })
+        .catch(e => {
+            res.status(403).json({ e });
+        });
+})
 
 router.get('/:id', tokenValidation.checkToken, (req, res) => {
-  itemFunction.getParlicaulaItem(req.params.id)
-    .then(d => res.json(d))
-    .catch(e => {
-      res.status(403).json({ e });
-    });
-});
+    catagoryFunction.getParlicaulaCatagory(req.params.id)
+        .then(d => res.json(d))
+        .catch(e => {
+            res.status(403).json({ e });
+        });
+})
 router.delete('/:id', tokenValidation.checkToken, (req, res) => {
-  itemFunction.deleteItem(req.params.id)
-    .then(d => res.json(d))
-    .catch(e => {
-      res.status(403).json({ e });
-    });
-});
+    catagoryFunction.deleteCatagory(req.params.id)
+        .then(d => res.json(d))
+        .catch(e => {
+            res.status(403).json({ e });
+        })
+})
 
 router.put('/:id', tokenValidation.checkToken, (req, res) => {
-  itemFunction.updateItem(req.body, req.params.id)
-    .then(d => res.json(d))
-    .catch(e => {
-      res.status(403).json({ e });
-    });
-});
+    catagoryFunction.updateCatagory(req.body, req.params.id)
+        .then(d => res.json(d))
+        .catch(e => {
+            res.status(403).json({ e });
+        })
+})
 
 module.exports = router;

@@ -1,23 +1,35 @@
-import mongoose, { Schema } from 'mongoose';
+const mongoose=require('mongoose')
+const Schema = mongoose.Schema;
 
-const ItemSchema = new Schema({
-   title: {
-     type: String
-   },
-   description: {
-     type: String
-   },
-  showCorousal: {type: Boolean},
-  isLatest:{type:Boolean},
-    Category: {
-      type: Schema.Types.ObjectId,
-      ref: 'Catagory'
+var itemSchema=new mongoose.Schema({
+    name:{
+        type:String,
+        required:true,
+        unique:true,
     },
-  imageUrl:{
-     type:String,
-     required:true
-  }
-},
-{timeStamp: true });
+    description:{
+        type:String,
+        required:true
+    },
+    image:{
+      type:String,
+      required:true,
+        unique:true,
+    },
+    catagory:{ type: Schema.Types.ObjectId, ref: 'catagorySchema'},
+    showCorousal:{
+      type:Boolean,
+      default:false
+    },
+    price:
+    {
+      type:Number
+    }
+  },
+{
+    timestamps:true
 
-export default mongoose.model('Item', ItemSchema);
+});
+
+const itemModel = mongoose.model("itemSchema", itemSchema);
+module.exports=itemModel;
