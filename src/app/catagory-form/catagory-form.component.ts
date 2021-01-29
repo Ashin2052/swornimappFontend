@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Catagory} from '../catagory-list/catagory-list.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {CatagoryServicesService} from '../services/catagory-services.service';
 
 @Component({
   selector: 'app-catagory-form',
@@ -18,7 +19,8 @@ export class CatagoryFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               public dialogRef: MatDialogRef<CatagoryFormComponent, Catagory>,
-              @Inject(MAT_DIALOG_DATA) public catagory: Catagory) {
+              @Inject(MAT_DIALOG_DATA) public catagory: Catagory,
+              private catagoryService: CatagoryServicesService) {
   }
 
   createEditCatagoryForm: FormGroup = this.fb.group({
@@ -37,6 +39,17 @@ export class CatagoryFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    if (this.createEditCatagoryForm.valid) {
+      if (this.catagory) {
+        this.catagoryService.updateCatagoryList(this.createEditCatagoryForm.value, this.catagory._id).subscribe((value => {
+          this.dialogRef.close(value);
+        }));
+      } else {
+        this.catagoryService.postCatagoryList(this.createEditCatagoryForm.value).subscribe((value => {
+          this.dialogRef.close(value);
+        }));
+      }
+    }
   }
 
   onCancel() {

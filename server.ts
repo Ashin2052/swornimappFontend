@@ -92,6 +92,7 @@ import {enableProdMode} from '@angular/core';
 import * as express from 'express';
 import {join} from 'path';
 import {readFileSync} from 'fs';
+import * as cors from 'cors';
 
 import * as mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -102,7 +103,7 @@ enableProdMode();
 
 // Express server
 const app = express();
-
+app.use(cors());
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist');
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Catagory} from '../catagory-list/catagory-list.component';
 import {Observable} from 'rxjs';
@@ -13,23 +13,23 @@ export class CatagoryServicesService {
 
   constructor(private http: HttpClient) { }
 
-  postCatagoryList(catagory) {
-    return this.http.post(this.baseUrl, catagory);
+  postCatagoryList(catagory): Observable<Catagory> {
+    return this.http.post<Catagory>(this.baseUrl, catagory);
   }
 
   getCatagoryList(): Observable<Catagory[]> {
     return this.http.get<Catagory[]>(this.baseUrl);
   }
 
-  updateCatagoryList(catagory) {
-    return this.http.put(this.baseUrl + '/' + catagory.id, catagory);
+  updateCatagoryList(catagory, id): Observable<Catagory> {
+    return this.http.put<Catagory>(this.baseUrl + id, catagory);
   }
 
-  deleteCatagory(catagoryId: number) {
-    return this.http.delete(catagoryId.toString());
+  deleteCatagory(catagoryId) {
+    return this.http.delete(this.baseUrl  + catagoryId);
   }
 
   getCatagoryById(catagoryId) {
-    return this.http.get(this.baseUrl + '/' + catagoryId.toString());
+    return this.http.get(this.baseUrl  + catagoryId.toString());
   }
 }

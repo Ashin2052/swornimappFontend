@@ -15,14 +15,14 @@ import {HeaderComponent} from './header/header.component';
 import {HomepageComponent} from './homepage/homepage.component';
 import {AuthGuardService} from './services/auth-service/auth.guard';
 import {AuthService} from './services/auth-service/auth.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatButtonModule,
+  MatButtonModule, MatCardModule,
   MatDialogModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatTableModule
+  MatFormFieldModule, MatGridListModule, MatIconModule,
+  MatInputModule, MatListModule, MatSelectModule, MatSlideToggleModule,
+  MatTableModule, MatToolbarModule
 } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
@@ -36,11 +36,16 @@ import {
 } from '@angular/flex-layout';
 import {AdminHeaderComponent} from './admin-header/admin-header.component';
 import {HomePageHeaderComponent} from './home-page-header/home-page-header.component';
+import { AdminMainPageComponent } from './admin-main-page/admin-main-page.component';
+import { TokenInterceptor } from './services/auth-service/jwt.interceptor';
+import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
+    ConfirmDialogComponent,
     LoginComponent,
     ProductListComponent,
     ProductFormComponent,
@@ -50,7 +55,8 @@ import {HomePageHeaderComponent} from './home-page-header/home-page-header.compo
     HeaderComponent,
     HomepageComponent,
     AdminHeaderComponent,
-    HomePageHeaderComponent
+    HomePageHeaderComponent,
+    AdminMainPageComponent
   ],
   imports: [
     CommonModule,
@@ -64,15 +70,27 @@ import {HomePageHeaderComponent} from './home-page-header/home-page-header.compo
     ReactiveFormsModule,
     MatButtonModule,
     MatTableModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatListModule,
+      MDBBootstrapModule.forRoot()
   ],
-  entryComponents: [CatagoryFormComponent],
+  entryComponents: [CatagoryFormComponent, ConfirmDialogComponent, ProductFormComponent],
   providers: [AuthGuardService, AuthService,
     StyleUtils, StyleUtils, StylesheetMap,
     MediaMarshaller, ɵMatchMedia, BreakPointRegistry,
     PrintHook, LayoutStyleBuilder,
     LayoutAlignStyleBuilder,
     LayoutGapStyleBuilder,
-    FlexStyleBuilder, ShowHideStyleBuilder, FlexOrderStyleBuilder ,
+    FlexStyleBuilder, ShowHideStyleBuilder, FlexOrderStyleBuilder , {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
     {
     provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
     useValue: {

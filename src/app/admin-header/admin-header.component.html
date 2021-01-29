@@ -1,3 +1,12 @@
-<p>
-  admin-header works!
-</p>
+<div *ngIf="(isAuthenticated$ | async)">
+  <mat-toolbar fxLayoutGap="4px" fxLayoutAlign="space-between center">
+    <div>
+      <a mat-raised-button color="primary" routerLink="catagory">
+        Catagory
+      </a>
+    </div>
+    <button mat-stroked-button color="warn" (click)="logout()">
+      Logout
+    </button>
+  </mat-toolbar>
+</div>

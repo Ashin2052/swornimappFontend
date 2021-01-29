@@ -1,3 +1,41 @@
 <p>
   product-list works!
 </p>
+<button (click)="addCatagory()">add product</button>
+<div class="container">
+  <div class="row" >
+    <!--Grid column-->
+    <div class="col-lg-3 col-md-6 mb-3" *ngFor="let product of products" mdbWavesEffect>
+        <!--Card-->
+        <mdb-card cascade="true">
+
+          <!--Card image-->
+          <div class="view view-cascade overlay waves-light video-zoom" mdbWavesEffect>
+            <img style="height: 200px !important; width: 100%" [src]="getImage(product.image)" >
+            <a>
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+          <!--/.Card image-->
+
+          <!--Card content-->
+          <div cascade="true" class="text-center pd-4" fxLayout="column">
+            <span>{{product.catagory.name}}</span>
+            <span class="float-left">{{product.name}}</span>
+            <span >{{product.description}}</span>
+            <span class="color-blue">${{product.price}}</span>
+          </div>
+          <!--/.Card content-->
+          <span  fxLayout="row" fxLayoutAlign="space-around center"  class="pd-10">
+           <button mat-stroked-button color="accent" (click)="editProduct(product)">Edit</button>
+          <button mat-stroked-button color="warn" (click)="onDelete(product)">Delete</button>
+         </span>
+        </mdb-card>
+        <!--/.Card-->
+      </div>
+    </div>
+
+</div>
+
+
+

@@ -1,3 +1,79 @@
-<p>
-  homepage works!
-</p>
+<!--header-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark blue ">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" href="#">Navbar</a></mdb-navbar-brand>
+
+  <!-- Collapsible content -->
+  <links>
+
+    <!-- Links -->
+    <ul mdbScrollSpy="scrollspy1" class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a mdbScrollSpyLink="home" class="nav-link waves-light" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a mdbScrollSpyLink="features" class="nav-link waves-light" mdbWavesEffect>Features</a>
+      </li>
+      <li class="nav-item">
+        <a mdbScrollSpyLink="pricing" class="nav-link waves-light" mdbWavesEffect>Pricing</a>
+      </li>
+    </ul>
+    <!-- Links -->
+
+  </links>
+  <!-- Collapsible content -->
+
+</mdb-navbar>
+<!--corousal-->
+
+<!-- Carousel wrapper -->
+<mdb-carousel [animation]="'slide'">
+  <mdb-carousel-item *ngFor="let product of products">
+    <div class="view w-100 " *ngIf="product.showCorousal">
+      <img class="d-block w-100" style="max-height: 300px !important;"  [src]="getImage(product.image)" alt="First slide">
+      <div class="mask rgba-black-light waves-light" mdbWavesEffect></div>
+    </div>
+    <div class="carousel-caption">
+      <h3 class="h3-responsive">{{product.name}}</h3>
+      <p>{{product.description}}</p>
+    </div>
+  </mdb-carousel-item>
+</mdb-carousel><!-- Carousel wrapper -->
+
+<!--body-->
+
+<div class=" pd-10" fxLayout="row">
+  <div fxFlex="30">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let catagory of catagoryList">{{catagory.name}}</li>
+    </ul>
+  </div>
+  <div class="row" >
+    <!--Grid column-->
+    <div class="col-lg-3 col-md-6 mb-3"  mdbScrollSpyElement="scrollspy1" id="home"
+         *ngFor="let product of products" mdbWavesEffect>
+      <!--Card-->
+      <mdb-card cascade="true">
+
+        <!--Card image-->
+        <div class="view view-cascade overlay waves-light video-zoom" mdbWavesEffect>
+          <img style="height: 200px !important; width: 100%" [src]="getImage(product.image)" >
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <!--/.Card image-->
+        <!--Card content-->
+        <div cascade="true" class="text-center pd-4" fxLayout="column">
+          <span>{{product.catagory.name}}</span>
+          <span class="float-left">{{product.name}}</span>
+          <span >{{product.description}}</span>
+          <span class="color-blue">${{product.price}}</span>
+        </div>
+        <!--/.Card content-->
+      </mdb-card>
+      <!--/.Card-->
+    </div>
+  </div>
+</div>

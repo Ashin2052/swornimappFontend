@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
+import {AuthGuardService} from './services/auth-service/auth.guard';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,7 +9,8 @@ import {Meta, Title} from '@angular/platform-browser';
 export class AppComponent implements OnInit {
   title = 'angular-universal-heroku';
   constructor(    private titleService: Title,
-                  private meta: Meta) {
+                  private meta: Meta,
+                  private authService:AuthGuardService) {
     this.meta.addTags([
       {name: 'google-site-verification', content: 'ci2u4_rFCnV4ahAB9FVbM9RH9amaItDJggMX92rN0-s'},
       { name: 'keywords', content: 'Swornim wind pipe industry nepal' },

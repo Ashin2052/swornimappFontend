@@ -1,3 +1,131 @@
-<p>
-  product-form works!
-</p>
+<div *ngIf="catagories">
+  <span class="fw-400">{{product ? 'Update' : 'Create'}}Product </span>
+  <form
+    fxLayout="column"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="createEditProductForm"
+    (keydown.enter)="$event.preventDefault()">
+
+    <div fxLayoutAlign="space-between center">
+      <span fxFlex="35">Name</span>
+      <mat-form-field
+        floatLabel="never"
+        fxLayout="column"
+        fxFlex="65">
+        <input formControlName="name" matInput>
+        <mat-error *ngIf="formControls.name.touched || submitted">
+           <span *ngIf="formControls.name?.errors?.required">
+              Product name is required.
+            </span>
+          <span *ngIf="formControls.username?.errors?.minlength">
+              Product name must have at least 5 character.
+            </span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <span fxFlex="35">Type</span>
+      <mat-form-field
+        floatLabel="never"
+        fxLayout="column"
+        class="bi-mat-form-field filter-input"
+        fxFlex="65">
+        <input matInput formControlName="description">
+        <mat-error *ngIf="formControls.description.touched || submitted">
+                <span *ngIf="formControls.description?.errors?.required">
+              Product description is required.
+            </span>
+          <span *ngIf="formControls.description?.errors?.minlength">
+               Product description must have at least 5 character.
+            </span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <span fxFlex="35">Price</span>
+      <mat-form-field
+        floatLabel="never"
+        fxLayout="column"
+        class="bi-mat-form-field filter-input"
+        fxFlex="65">
+        <input matInput formControlName="price">
+        <mat-error *ngIf="formControls.price.touched || submitted">
+                <span *ngIf="formControls.price?.errors?.required">
+              Product price is required.
+            </span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center" *ngIf="product">
+      <span fxFlex="35">Current Image</span>
+      <div>
+        <img [src]="getImage(product.image)" height="150px" width="150px">
+      </div>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <span fxFlex="35">Image</span>
+      <div
+        floatLabel="never"
+        fxLayout="column"
+        fxFlex="65">
+        <input
+          id="image"
+          type="file"
+          (change)="onFileChange($event)" accept="image/x-png,image/gif,image/jpeg">
+        <mat-error *ngIf="formControls.image.touched || submitted">
+                <span *ngIf="formControls.image?.errors?.required">
+              Image  is required.
+            </span>
+        </mat-error>
+      </div>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <span fxFlex="35">Banner</span>
+      <mat-form-field
+        appearance="none"
+        floatLabel="never"
+        fxLayout="column"
+        class="bi-mat-form-field filter-input"
+        fxFlex="65">
+        <mat-slide-toggle formControlName="showCorousal"></mat-slide-toggle>
+        <input matInput hidden>
+      </mat-form-field>
+    </div>
+
+    <div fxLayoutAlign="space-between center">
+      <span fxFlex="35">Catagory</span>
+      <mat-form-field
+        floatLabel="never"
+        fxLayout="column"
+        #matFormField
+        fxFlex="65">
+        <mat-select formControlName="catagory" placeholder="Select Catagories" #matSelect>
+          <mat-option *ngFor="let catagory of catagories" [value]="catagory.name">
+            {{catagory.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.catagory.touched || submitted">
+                <span *ngIf="formControls.catagory?.errors?.required">
+              Product catagory is required.
+            </span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+      <button mat-button mat-stroked-button color="warn" fxFlex="20" class="bi-btn bi-btn-primary">
+        {{ product ? 'Update' : 'Save' }}
+      </button>
+      <button mat-button mat-stroked-button
+              color="accent" type="button" fxFlex="20"
+              class="bi-btn bi-btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

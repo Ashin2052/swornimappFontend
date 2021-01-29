@@ -1,0 +1,13 @@
+<div fxLayout="column" class="pd-16" fxLayoutGap="20px">
+  <span class="page-title">{{ title }}</span>
+  <span class="body-text">{{ message }}</span>
+
+  <div fxLayoutGap="5px">
+    <button mat-raised-button color="warn" (click)="onConfirm()">
+      <span> Yes</span>
+    </button>
+    <button mat-raised-button color="accent" class="bi-btn bi-btn-secondary" (click)="onDismiss()">
+      <span> No</span>
+    </button>
+  </div>
+</div>

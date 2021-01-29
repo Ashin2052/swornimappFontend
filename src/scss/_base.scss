@@ -14,6 +14,10 @@
   padding: 10px;
 }
 
+.pd-4
+{
+  padding: 4px;
+}
 //font
 
 .fs-16
@@ -38,4 +42,27 @@
 .ff-cal
 {
   font-family: Calibri;
+}
+
+.product-cotainer{
+  padding: 10px 150px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.product
+{
+  box-shadow: -4px 6px 6px -6px #00000070;
+
+}
+.product-cotainer .product{
+  flex: 1 1 0px;
+  /*Start Run Code Snippet output CSS*/
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  /*End Run Code Snippet output CSS*/
+}
+
+.color-blue{
+  color: darkblue;
 }
