@@ -35,11 +35,11 @@ import {
   StyleUtils, ɵMatchMedia
 } from '@angular/flex-layout';
 import {AdminHeaderComponent} from './admin-header/admin-header.component';
-import {HomePageHeaderComponent} from './home-page-header/home-page-header.component';
 import { AdminMainPageComponent } from './admin-main-page/admin-main-page.component';
 import { TokenInterceptor } from './services/auth-service/jwt.interceptor';
 import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -55,7 +55,6 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
     HeaderComponent,
     HomepageComponent,
     AdminHeaderComponent,
-    HomePageHeaderComponent,
     AdminMainPageComponent
   ],
   imports: [
@@ -77,7 +76,8 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
     MatSelectModule,
     MatGridListModule,
     MatListModule,
-      MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    MatMenuModule
   ],
   entryComponents: [CatagoryFormComponent, ConfirmDialogComponent, ProductFormComponent],
   providers: [AuthGuardService, AuthService,

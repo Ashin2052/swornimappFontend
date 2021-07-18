@@ -42,6 +42,7 @@ export class ProductServiceService {
   }
 
   getImage(image) {
+    console.log(`${environment.baseUrl}/${image}`)
     return (`${environment.baseUrl}/${image}`);
   }
 }

@@ -1,3 +1,12 @@
-<div>
-  <div><app-catagory-list></app-catagory-list></div>
+<app-admin-header (active)="route($event)"></app-admin-header>
+<div  class="w-100 pt-10">
+   <div *ngIf="active == 'product'" class="w-100" fxLayout="column">
+     <div class="pd-10">
+       <span style="float: right"><button mat-raised-button color="primary" (click)="productListComponent.addProduct()">Add Product</button> </span>
+     </div>
+   <app-product-list #productListComponent></app-product-list>
+   </div>
+    <div *ngIf="active == 'category'">
+     <app-catagory-list></app-catagory-list>
+  </div>
 </div>

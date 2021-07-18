@@ -1,11 +1,8 @@
-<p>
-  product-list works!
-</p>
-<button (click)="addCatagory()">add product</button>
-<div class="container">
-  <div class="row" >
-    <!--Grid column-->
-    <div class="col-lg-3 col-md-6 mb-3" *ngFor="let product of products" mdbWavesEffect>
+<div class="container" fxLayout="column" fxLayoutGap="10px">
+  <div>
+    <div class="row" >
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-3" *ngFor="let product of products" mdbWavesEffect>
         <!--Card-->
         <mdb-card cascade="true">
 
@@ -35,6 +32,7 @@
       </div>
     </div>
 
+  </div>
 </div>
 
 

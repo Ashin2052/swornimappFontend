@@ -45,7 +45,7 @@
 
 <div class=" pd-10" fxLayout="row">
   <div fxFlex="30">
-    <ul class="list-group">
+    <ul class="list-group ">
       <li class="list-group-item" *ngFor="let catagory of catagoryList">{{catagory.name}}</li>
     </ul>
   </div>
@@ -76,4 +76,7 @@
       <!--/.Card-->
     </div>
   </div>
+</div>
+<div>
+  <app-footer [categories]="catagoryList"></app-footer>
 </div>

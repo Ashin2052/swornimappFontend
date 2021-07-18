@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component, DoCheck, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, DoCheck, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from '../services/auth-service/auth.service';
 import {Observable} from 'rxjs';
+import {AdminRoutes} from "../admin-main-page/admin-main-page.component";
 
 @Component({
   selector: 'app-admin-header',
@@ -10,6 +11,7 @@ import {Observable} from 'rxjs';
 })
 export class AdminHeaderComponent implements OnInit ,  DoCheck {
   public isAuthenticated$ = this.authService.isAuthenticated$;
+  @Output() active: EventEmitter<AdminRoutes> = new EventEmitter<AdminRoutes>();
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) {
   }

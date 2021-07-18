@@ -39,7 +39,7 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  addCatagory() {
+  addProduct() {
     const dialogRef = this.dialog.open<ProductFormComponent, Product, Product>(
       ProductFormComponent,
       {
